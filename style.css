@@ -1,0 +1,168 @@
+/* =====================
+   RESET & BASE
+===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #0f172a;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+}
+
+/* =====================
+   CLOCK
+===================== */
+#displayTime {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* =====================
+   SEARCH
+===================== */
+body > div:nth-child(2) {
+    display: flex;
+    gap: 10px;
+}
+
+#search-input {
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+
+#button {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    background: #38bdf8;
+    color: #000;
+    cursor: pointer;
+}
+
+/* =====================
+   MAIN CONTAINER
+===================== */
+body > div:nth-child(3) {
+    width: 100%;
+    max-width: 650px;
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+/* DATE & TIME */
+#date,
+#time {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 8px;
+}
+
+/* =====================
+   TODAY
+===================== */
+#today {
+    margin-top: 16px;
+    padding: 16px;
+    background: #334155;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#weather-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#today #weather-icon img {
+    width: 60px;       /* ICON TODAY */
+    height: 60px;
+    object-fit: contain;
+}
+
+#weather-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#cityName {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#hourlyTemperature,
+#hourlyTemperatureF {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* =====================
+   COMING DAYS (TOMORROW + DAY AFTER)
+===================== */
+#weather-coming-days {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+}
+
+/* SINGLE DAY CARD */
+#tomorrow,
+#dayAfterTomorrow {
+    flex: 1;
+    padding: 12px;
+    background: #273449;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#tomorrow-forecast img,
+#day-after-tomorrow-forecast img {
+    width: 40px;    /* ICON FORECAST */
+    height: 40px;
+    object-fit: contain;
+}
+
+#tomorrow-forecast,
+#day-after-tomorrow-forecast {
+    font-size: 24px;
+}
+
+#tomorrow-forecast-label,
+#day-after-tomorrow-forecast-label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 600px) {
+    #today {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #weather-coming-days {
+        flex-direction: column;
+    }
+}

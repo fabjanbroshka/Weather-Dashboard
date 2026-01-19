@@ -131,7 +131,6 @@ async function getCityData () {
             [99, {label:`<p>"Thunderstorm with heavy hail"</p>` , icon:`<img id="icon" src='images/thunder_6469244.png' alt="Albania" >` }],
         ])
 
-
         if (todayWeatherIcon === null || !(todayWeatherIcon instanceof HTMLElement)){
             throw new Error('Today\'s weather icon element not found');
         }
@@ -152,8 +151,6 @@ async function getCityData () {
         }
         maxTemperature.innerHTML = `Max:${actualMaxT}°C`;
         minTemperature.innerHTML = `Min:${actualMinT}°C`;
-
-
 
 
         if (tomorrow_forecast_icon === null || !(tomorrow_forecast_icon instanceof HTMLElement)) {
@@ -186,8 +183,6 @@ async function getCityData () {
         const nextDayMaxT = cityWeatherApi.daily.temperature_2m_max[1];
         tomorrow_temperature_max_c.innerHTML = `Max:${nextDayMaxT}°C`
         tomorrow_temperature_max_f.innerHTML = `Max:${nextDayMaxT+32}°F`
-
-
 
 
         if (day_after_tomorrow_forecast_icon === null || !(day_after_tomorrow_forecast_icon instanceof HTMLElement)) {

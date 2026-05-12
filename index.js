@@ -1,5 +1,6 @@
 const input = document.getElementById('search-input');
 const button = document.getElementById('button');
+const weatherCard = document.getElementById('weather-card');
 let todayWeatherIcon = document.getElementById('weather-icon');
 let todayWeatherLabel = document.getElementById('weather-label');
 let minTemperature = document.getElementById('min-temperature');
@@ -28,6 +29,9 @@ async function getCityData() {
     if (input === null || !(input instanceof HTMLInputElement)) {
         throw new Error("Input element is either not found or not an HTML input");
     }
+    weatherCard?.classList.add('is-loading');
+    if (button instanceof HTMLButtonElement)
+        button.disabled = true;
     const cityValue = input.value;
     const endpoint = `https://geocoding-api.open-meteo.com/v1/search?name=${cityValue}&count=1&language=en`;
     try {
@@ -195,13 +199,18 @@ async function getCityData() {
     catch (error) {
         console.error("no data found");
     }
+    finally {
+        weatherCard?.classList.remove('is-loading');
+        if (button instanceof HTMLButtonElement)
+            button.disabled = false;
+    }
 }
 button?.addEventListener('click', () => {
     getCityData();
 });
 export {};
 //const time = dateAndTime.split("T")[1];
-//const temperatureCelsius = document.getElementById('temperature-celsius');
-//const temperatureFahrenheit = document.getElementById('temperature-fahrenheit')
-//const temperatureApi = cityWeatherApi.hourly.temperature_2m[0]
+// //const temperatureCelsius = document.getElementById('temperature-celsius');
+// //const temperatureFahrenheit = document.getElementById('temperature-fahrenheit')
+// //const temperatureApi = cityWeatherApi.hourly.temperature_2m[0]
 //# sourceMappingURL=index.js.map

@@ -1,30 +1,126 @@
 /* =====================
    RESET & BASE
 ===================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
 }
 
+/* =====================
+   KEYFRAMES
+===================== */
+@keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes orbFloat1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(60px, -80px) scale(1.1); }
+    66%       { transform: translate(-40px, 40px) scale(0.95); }
+}
+
+@keyframes orbFloat2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(-70px, 60px) scale(1.05); }
+    66%       { transform: translate(50px, -50px) scale(1.1); }
+}
+
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.15), 0 8px 32px rgba(0,0,0,0.3); }
+    50%       { box-shadow: 0 0 40px rgba(56, 189, 248, 0.3), 0 8px 32px rgba(0,0,0,0.3); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92) translateY(12px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes borderGlow {
+    0%, 100% { border-color: rgba(56, 189, 248, 0.2); }
+    50%       { border-color: rgba(99, 102, 241, 0.5); }
+}
+
+/* =====================
+   BODY & BACKGROUND
+===================== */
 body {
     min-height: 100vh;
-    background: #0f172a;
-    color: #ffffff;
+    background: #0a0f1e;
+    color: #e2e8f0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    gap: 16px;
+    padding: 36px 20px;
+    gap: 22px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Ambient background orbs */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::before {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+    top: -100px;
+    left: -100px;
+    animation: orbFloat1 18s ease-in-out infinite;
+}
+
+body::after {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    bottom: -150px;
+    right: -150px;
+    animation: orbFloat2 22s ease-in-out infinite;
+}
+
+body > * {
+    position: relative;
+    z-index: 1;
 }
 
 /* =====================
    CLOCK
 ===================== */
 #displayTime {
-    font-size: 14px;
-    opacity: 0.8;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #475569;
+    text-transform: uppercase;
+    animation: fadeSlideUp 0.6s ease both;
 }
 
 /* =====================
@@ -33,67 +129,195 @@ body {
 body > div:nth-child(2) {
     display: flex;
     gap: 10px;
+    animation: fadeSlideUp 0.6s ease 0.1s both;
 }
 
 #search-input {
-    padding: 10px 14px;
-    border-radius: 6px;
-    border: none;
+    padding: 12px 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     outline: none;
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 500;
+    backdrop-filter: blur(16px);
+    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    min-width: 230px;
+}
+
+#search-input::placeholder {
+    color: #334155;
+}
+
+#search-input:focus {
+    border-color: rgba(56, 189, 248, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.08), 0 4px 20px rgba(0,0,0,0.2);
 }
 
 #button {
-    padding: 10px 16px;
-    border-radius: 6px;
+    padding: 12px 24px;
+    border-radius: 14px;
     border: none;
-    background: #38bdf8;
-    color: #000;
+    background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+    background-size: 200% auto;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
     cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: transform 0.15s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+#button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+    background-size: 200% auto;
+    opacity: 0;
+    transition: opacity 0.3s;
+    animation: shimmer 2.5s linear infinite;
+}
+
+#button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.35);
+}
+
+#button:hover::after {
+    opacity: 1;
+}
+
+#button:active {
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 /* =====================
    MAIN CONTAINER
 ===================== */
-body > div:nth-child(3) {
+#weather-card {
     width: 100%;
     max-width: 650px;
-    background: #1e293b;
-    border-radius: 10px;
-    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 24px;
+    padding: 28px;
+    backdrop-filter: blur(24px);
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+    animation: fadeSlideUp 0.7s ease 0.2s both;
+    position: relative;
+}
+
+/* =====================
+   LOADER
+===================== */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes loaderFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+#loader {
+    display: none;
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: rgba(10, 15, 30, 0.75);
+    backdrop-filter: blur(6px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 10;
+    animation: loaderFadeIn 0.2s ease both;
+}
+
+#weather-card.is-loading #loader {
+    display: flex;
+}
+
+#weather-card.is-loading > *:not(#loader) {
+    pointer-events: none;
+    filter: blur(2px);
+    opacity: 0.4;
+    transition: opacity 0.2s, filter 0.2s;
+}
+
+.spinner-ring {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.07);
+    border-top-color: #38bdf8;
+    border-right-color: #6366f1;
+    animation: spin 0.8s linear infinite;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+.loader-text {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    text-transform: uppercase;
 }
 
 /* DATE & TIME */
 #date,
 #time {
-    font-size: 14px;
-    opacity: 0.8;
-    margin-bottom: 8px;
+    font-size: 12px;
+    color: #334155;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
 }
 
 /* =====================
    TODAY
 ===================== */
 #today {
-    margin-top: 16px;
-    padding: 16px;
-    background: #334155;
-    border-radius: 8px;
-
+    margin-top: 22px;
+    padding: 22px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(99, 102, 241, 0.12) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    border-radius: 18px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 22px;
+    animation: glowPulse 4s ease-in-out infinite;
+    transition: transform 0.2s;
+}
+
+#today:hover {
+    transform: translateY(-2px);
 }
 
 #weather-icon {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 16px;
+    padding: 12px;
+    flex-shrink: 0;
+    animation: float 4s ease-in-out infinite;
 }
 
 #today #weather-icon img {
-    width: 60px;       /* ICON TODAY */
-    height: 60px;
+    width: 68px;
+    height: 68px;
     object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.45));
 }
 
 #weather-details {
@@ -103,14 +327,22 @@ body > div:nth-child(3) {
 }
 
 #cityName {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: -0.02em;
 }
 
 #hourlyTemperature,
 #hourlyTemperatureF {
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8 0%, #a5b4fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
 }
 
 /* =====================
@@ -126,37 +358,70 @@ body > div:nth-child(3) {
 #tomorrow,
 #dayAfterTomorrow {
     flex: 1;
-    padding: 12px;
-    background: #273449;
-    border-radius: 8px;
-
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    cursor: default;
+}
+
+#tomorrow {
+    animation: scaleIn 0.5s ease 0.4s both;
+}
+
+#dayAfterTomorrow {
+    animation: scaleIn 0.5s ease 0.55s both;
+}
+
+#tomorrow:hover,
+#dayAfterTomorrow:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(56, 189, 248, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
 #tomorrow-forecast img,
 #day-after-tomorrow-forecast img {
-    width: 40px;    /* ICON FORECAST */
-    height: 40px;
+    width: 46px;
+    height: 46px;
     object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.3));
+    transition: transform 0.3s;
+}
+
+#tomorrow:hover #tomorrow-forecast img,
+#dayAfterTomorrow:hover #day-after-tomorrow-forecast img {
+    transform: scale(1.1) rotate(-5deg);
 }
 
 #tomorrow-forecast,
 #day-after-tomorrow-forecast {
-    font-size: 24px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #e2e8f0;
 }
 
 #tomorrow-forecast-label,
 #day-after-tomorrow-forecast-label {
-    font-size: 14px;
-    opacity: 0.8;
+    font-size: 13px;
+    color: #475569;
+    font-weight: 500;
+    margin-top: 3px;
 }
 
 /* =====================
    RESPONSIVE
 ===================== */
 @media (max-width: 600px) {
+    body {
+        padding: 20px 14px;
+    }
+
     #today {
         flex-direction: column;
         text-align: center;
@@ -164,5 +429,10 @@ body > div:nth-child(3) {
 
     #weather-coming-days {
         flex-direction: column;
+    }
+
+    #hourlyTemperature,
+    #hourlyTemperatureF {
+        font-size: 30px;
     }
 }
